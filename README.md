@@ -1,139 +1,300 @@
-House Price Prediction Model using Satellite Imagery
-Project Overview
+# House Price Prediction Model using Satellite Imagery
 
-This project focuses on predicting house prices using a hybrid deep learning approach that combines structured tabular housing data with satellite imagery.
-The key idea is to capture both property-level attributes (such as size, rooms, location features) and visual neighborhood context extracted from satellite images, which often has a significant impact on real estate prices.
+### Finance & AI Research Project
 
-The hybrid model is the primary contribution of this project, while tabular-only and CNN-only models are included for comparison and analysis.
+Implementation of a hybrid deep learning framework that combines structured housing data with satellite imagery to predict residential property prices.
+
+---
+
+# Project Overview
+
+This project investigates whether satellite imagery can improve house price prediction when combined with traditional tabular housing features.
+
+The core idea is to capture both:
+
+- Property-level information (size, rooms, location features, etc.)
+- Visual neighborhood characteristics extracted from satellite imagery
+
+A hybrid deep learning model is developed as the primary contribution of this project. For comparison, tabular-only and CNN-only baselines are also implemented and evaluated.
+
+---
+
+# Problem Statement
+
+Given housing data and geographic coordinates:
+
+- Predict house prices accurately
+- Extract visual information from satellite imagery
+- Combine structured and image-based features
+- Compare hybrid learning against traditional approaches
+
+The objective is to determine whether neighborhood visual context contributes meaningful information beyond tabular features alone.
+
+---
+
+# Model Architecture
+
+The project implements three different approaches:
+
+| Model | Description |
+|---------|------------|
+| Tabular Model | Uses structured housing features only |
+| CNN Model | Uses satellite imagery only |
+| Hybrid Model | Combines tabular and image features |
+
+The Hybrid Model serves as the primary model and is used for final predictions.
+
+---
+
+# Methodology
+
+1. Load raw housing datasets
+2. Download satellite imagery using property coordinates
+3. Clean and preprocess tabular data
+4. Perform feature engineering
+5. Normalize and scale features
+6. Train CNN-only model
+7. Train Tabular-only model
+8. Train Hybrid Deep Learning model
+9. Evaluate model performance
+10. Generate predictions and visual explanations
+
+---
+
+# Technologies Used
+
+- Python
+- TensorFlow 2.13
+- NumPy
+- Pandas
+- Scikit-Learn
+- Matplotlib
+- Jupyter Notebook
+
+---
+
+# Repository Structure
+
 ```text
-House Price Prediction Model/
-    │
-    ├── datasets/
-    |   └── Raw tabular housing datasets
-    │
-    ├── data_fetcher.py
-    |   └── Downloads satellite images using property coordinates
-    │
-    ├── preprocessing.ipynb
-    |   └── Data cleaning, feature engineering, and dataset preparation
-    │
-    ├── model_training.ipynb
-    |   └── Contains tabular, CNN-only, and hybrid models (primary model)
-    |
-    ├── best_hybrid_model_final.h5
-    |   └── Final trained hybrid model (primary model)
-    |
-    ├── cnn_training.h5
-    │   └── Trained CNN-only model
-    │
-    ├── README.md
-    │
-    └── requirements.txt
+House-Price-Prediction-Model/
+│
+├── datasets/
+│   ├── train.csv
+│   ├── test.csv
+│   ├── train(1).xlsx
+│   └── test2.xlsx
+│
+├── data_fetcher.py
+│
+├── preprocessing.ipynb
+│
+├── model_training.ipynb
+│
+├── final_prediction.csv
+│
+├── README.md
+│
+└── requirements.txt
+```
 
+---
 
-File Descriptions
+# File Descriptions
 
-data_fetcher.py
-    This script is responsible for fetching satellite images corresponding to each house using latitude and longitude information.
-    Uses satellite imagery services
-    Saves images locally in a structured format
-    Supports configurable train/test input files, output directory, image size, request delay, and test-size limits through command-line arguments
-    Intended to be run before preprocessing and training
-    Note: The satellite images directory is not included in the repository due to size constraints.
+## data_fetcher.py
 
+Downloads satellite images corresponding to each property using latitude and longitude coordinates.
+
+Features:
+
+- Automated image collection
+- Configurable image size
+- Custom train/test datasets
+- Adjustable request delay
+- Supports quick testing mode
+
+---
+
+## preprocessing.ipynb
+
+Prepares the dataset for training.
+
+Includes:
+
+- Data cleaning
+- Missing value handling
+- Feature engineering
+- Dataset preparation
+- Feature scaling
+- Image-path integration
+
+---
+
+## model_training.ipynb
+
+Contains complete model development and evaluation.
+
+Includes:
+
+### Tabular Model
+
+Baseline model trained on structured housing data.
+
+### CNN Model
+
+Image-based model trained solely on satellite imagery.
+
+### Hybrid Model
+
+Primary model that combines:
+
+- CNN image embeddings
+- Tabular housing features
+
+Additional functionality:
+
+- Model evaluation
+- Performance comparison
+- Grad-CAM visualizations
+- Explainability analysis
+
+---
+
+# Environment Setup
+
+## Required Environment
+
+This project was developed using:
+
+| Package | Version |
+|----------|---------|
+| Python | 3.10 |
+| TensorFlow | 2.13 |
+| NumPy | 1.23.5 |
+
+⚠️ TensorFlow versions 2.14+ may introduce compatibility issues.
+
+---
+
+# Installation
+
+### Create Virtual Environment
+
+```bash
+py -3.10 -m venv venv
+```
+
+### Activate Environment
+
+Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+# How to Run
+
+## Step 1: Download Satellite Images
+
+```bash
+py -3.10 data_fetcher.py
+```
+
+Quick test run:
+
+```bash
+py -3.10 data_fetcher.py --max-images 10
+```
+
+Custom configuration:
+
+```bash
+py -3.10 data_fetcher.py \
+--train-file datasets/train(1).xlsx \
+--test-file datasets/test2.xlsx \
+--output-dir satellite_images \
+--image-size 256 \
+--meters-per-pixel 0.5 \
+--delay 0.1
+```
+
+---
+
+## Step 2: Preprocess Dataset
+
+Run:
+
+```text
 preprocessing.ipynb
-    This notebook prepares the data for modeling.
-    It includes:
-        Cleaning of raw tabular data
-        Feature engineering
-        Attaching image paths to each data point
-        Scaling and normalization of tabular features
-        The output of this notebook is a dataset ready for model training.
+```
 
+This notebook generates the final processed dataset used for training.
+
+---
+
+## Step 3: Train Models
+
+Run:
+
+```text
 model_training.ipynb
+```
 
-    These notebooks contain all modeling logic, including:
-        A tabular-only model (For comparision purposes)
-        The hybrid model (main model of the project, from cell 13 to cell 25)
-        A CNN-only model
+The notebook includes:
 
-    They also include:
-        Code for model evaluation
-        Grad-CAM / heatmap generation for explainability
-        Comparison between different modeling approaches
+- Tabular-only model
+- CNN-only model
+- Hybrid model
 
-requirement.txt
-    contains all the modules required for the project
+---
 
+# Results
 
-⚠️ Important:
-    Running these notebooks is optional. Pretrained model files are already provided.
-    Directly load the trained models Or retrain the models if desired
+The Hybrid Model demonstrates the benefit of incorporating satellite imagery into house price prediction.
 
+### Key Findings
 
+- Visual neighborhood information contributes useful predictive signals.
+- Hybrid learning outperforms single-modality approaches.
+- Satellite imagery provides contextual information unavailable in tabular data.
+- Grad-CAM visualizations improve model interpretability.
 
+---
 
-Environment & Setup Instructions
-Required Environment
+# Notes for Evaluators
 
-This project was developed and tested using:
+- Pretrained models can be loaded directly.
+- Retraining is optional.
+- CPU execution is supported.
+- GPU acceleration is not required.
+- Hybrid model implementation is the primary contribution of the project.
 
-    Python: 3.10
-    TensorFlow: 2.13
-    NumPy: 1.23.5
-    and other libararies mentioned in the requirements.txt
+---
 
-Important Note
-    Newer TensorFlow versions (2.14+) introduce breaking changes and are not compatible with this codebase.
+# Future Improvements
 
+- Vision Transformers (ViT)
+- Multi-scale satellite imagery
+- Street-view image integration
+- Advanced ensemble techniques
+- Web deployment for real-time prediction
 
-Setup Steps
+---
 
-1).Create a virtual environment using Python 3.10:
+# Author
 
-    py -3.10 -m venv venv
+**Aryan Soni**  
+B.Tech Electrical Engineering  
+Indian Institute of Technology Roorkee
 
+GitHub: https://github.com/Aryan-soni6387
 
-2).Activate the environment:
-
-    Windows
-    venv\Scripts\activate
-
-3).Install all required packages
-
-    pip install -r requirements.txt
-
-4).Running the Project
-
-    Download satellite images
-
-        py -3.10 data_fetcher.py
-
-    Optional quick test run:
-
-        py -3.10 data_fetcher.py --max-images 10
-
-    Optional custom run:
-
-        py -3.10 data_fetcher.py --train-file datasets/train(1).xlsx --test-file datasets/test2.xlsx --output-dir satellite_images --image-size 256 --meters-per-pixel 0.5 --delay 0.1
-
-5).Preprocess the data
-
-    Run preprocessing.ipynb
-
-6).Model training
-
-    Run model_training.ipynb for the hybrid model
-
-    Alternatively, pretrained models can be loaded directly without retraining.
-
-
-Notes for Evaluators
-
-    Training deep models is optional
-
-    Pretrained checkpoints are provided for direct evaluation
-
-    The project is CPU-compatible; no GPU is required
-
-    The hybrid model is the primary contribution
+---
