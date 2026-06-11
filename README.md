@@ -296,5 +296,3 @@ B.Tech Electrical Engineering
 Indian Institute of Technology Roorkee
 
 GitHub: https://github.com/Aryan-soni6387
-
----
