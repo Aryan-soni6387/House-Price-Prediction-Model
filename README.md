@@ -291,8 +291,6 @@ The Hybrid Model demonstrates the benefit of incorporating satellite imagery int
 
 # Author
 
-**Aryan Soni**  
-B.Tech Electrical Engineering  
-Indian Institute of Technology Roorkee
+Aryan Soni 🎓 B.Tech Student, IIT Roorkee
 
 GitHub: https://github.com/Aryan-soni6387
