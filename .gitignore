@@ -1,0 +1,10 @@
+# .gitignore contents:
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+satellite_images/
+*.h5
+train_with_images.csv
+*.png
+*.jpg
